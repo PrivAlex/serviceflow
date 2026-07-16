@@ -30,6 +30,11 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'worker_id');
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }
 
 
