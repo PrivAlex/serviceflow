@@ -43,6 +43,11 @@ class User extends Authenticatable
         return $this->hasMany(Review::class, 'worker_id');
     }
 
+    public function workerProfile()
+    {
+        return $this->hasOne(WorkerProfile::class);
+    }
+
     public function isAdmin(): bool
     {
         return $this->role?->name === 'admin';
