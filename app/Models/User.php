@@ -2,14 +2,10 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
@@ -27,6 +23,26 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function ordersAsClient()
+    {
+        return $this->hasMany(Order::class, 'client_id');
+    }
+
+    public function ordersAsWorker()
+    {
+        return $this->hasMany(Order::class, 'worker_id');
+    }
+
+    public function reviewsGiven()
+    {
+        return $this->hasMany(Review::class, 'client_id');
+    }
+
+    public function reviewsReceived()
+    {
+        return $this->hasMany(Review::class, 'worker_id');
+    }
+
     public function isAdmin(): bool
     {
         return $this->role?->name === 'admin';
@@ -40,12 +56,5 @@ class User extends Authenticatable
     public function isClient(): bool
     {
         return $this->role?->name === 'client';
-    }
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
     }
 }

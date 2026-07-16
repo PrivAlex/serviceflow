@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('slug')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -30,7 +31,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
         Schema::dropIfExists('order_tag');
+        Schema::dropIfExists('tags');
     }
 };

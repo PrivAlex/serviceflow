@@ -2,23 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
-
-class Order extends Model
+class Review extends Model
 {
     use HasFactory , SoftDeletes;
     protected $fillable = [
+        'order_id',
         'client_id',
         'worker_id',
-        'title',
-        'description',
-        'price',
-        'status',
-        'deadline'
+        'rating',
+        'comment',
     ];
 
     public function client()
@@ -31,15 +27,8 @@ class Order extends Model
         return $this->belongsTo(User::class, 'worker_id');
     }
 
-    public function tags()
+    public function order()
     {
-        return $this->belongsToMany(Tag::class);
-    }
-
-    public function review()
-    {
-        return $this->hasOne(Review::class);
+        return $this->belongsTo(Order::class);
     }
 }
-
-
