@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
 
 // ========== ПУБЛІЧНІ ЗАЯВКИ (ДЛЯ ВСІХ) ==========
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 
 // ========== КЛІЄНТСЬКІ ЗАЯВКИ ==========
 Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->group(function () {
@@ -39,7 +40,6 @@ Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->g
     Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
     Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
     Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 });
 
 // ========== ВИКОНАВЕЦЬ — ЗАГОТОВКА ==========
