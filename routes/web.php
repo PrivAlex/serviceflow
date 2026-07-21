@@ -34,6 +34,10 @@ Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.sh
 
 // ========== КЛІЄНТСЬКІ ЗАЯВКИ ==========
 Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->group(function () {
+    // Дашборд клиента
+    Route::get('/dashboard', function () {
+        return Inertia::render('Client/Dashboard');})->name('dashboard');
+    // Заявки
     Route::get('/orders/my', [OrderController::class, 'myOrders'])->name('orders.my');
     Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
@@ -44,11 +48,19 @@ Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->g
 
 // ========== ВИКОНАВЕЦЬ — ЗАГОТОВКА ==========
 Route::middleware(['auth', 'role:worker'])->prefix('worker')->name('worker.')->group(function () {
+    // Дашборд виконавця
+    Route::get('/dashboard', function () {
+        return Inertia::render('Worker/Dashboard');})->name('dashboard');
+    // Заявки
     Route::get('/orders', [OrderController::class, 'availableOrders'])->name('orders.index');
 });
 
 // ========== АДМІН — ЗАГОТОВКА ==========
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Дашборд админа
+    Route::get('/dashboard', function () {
+        return Inertia::render('Admin/Dashboard');})->name('dashboard');
+
     Route::get('/orders', [OrderController::class, 'adminIndex'])->name('orders.index');
 });
 
