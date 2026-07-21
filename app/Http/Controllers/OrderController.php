@@ -107,7 +107,6 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        $this->authorize('view', $order);
         $order->load('tags', 'client', 'worker');
         return Inertia::render('Orders/Show', ['order' => $order]);
     }

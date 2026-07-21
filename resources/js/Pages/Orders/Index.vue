@@ -11,9 +11,7 @@
                             <div class="flex justify-between items-start">
                                 <div>
                                     <h2 class="text-xl font-semibold">
-                                        <a :href="route('orders.show', order.id)" class="text-blue-600 hover:underline">
-                                            {{ order.title }}
-                                        </a>
+                                        <a :href="route('orders.show', order.id)" class="text-blue-600 hover:underline">{{ order.title }}</a>
                                     </h2>
                                     <p class="text-gray-600 mt-1">{{ order.description || 'Опис відсутній' }}</p>
                                     <div class="flex gap-2 mt-2">
