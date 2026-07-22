@@ -77,7 +77,7 @@ class OrderController extends Controller
     public function create()
     {
         $tags = Tag::all();
-        return Inertia::render('Orders/Create', ['tags' => $tags]);
+        return Inertia::render('Client/Orders/Create', ['tags' => $tags]);
     }
 
     /**
@@ -107,7 +107,7 @@ class OrderController extends Controller
             $order->tags()->attach($data['tags']);
         }
 
-        return redirect()->route('client.orders.my')->with('success', 'Заявка створена');
+        return redirect()->route('client.orders.index')->with('success', 'Заявка створена');
     }
 
     /**
