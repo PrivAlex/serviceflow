@@ -124,9 +124,9 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        $this->authorize('update', $order);
+        // $this->authorize('update', $order);
         $tags = Tag::all();
-        return Inertia::render('Orders/Edit', [
+        return Inertia::render('Client/Orders/Edit', [
             'order' => $order->load('tags'),
             'tags' => $tags,
         ]);
@@ -137,7 +137,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        $this->authorize('update', $order);
+        // $this->authorize('update', $order);
 
         $data = $request->validate([
             'title' => 'required|string|max:255',
@@ -156,7 +156,7 @@ class OrderController extends Controller
             $order->tags()->detach();
         }
 
-        return redirect()->route('client.orders.my')->with('success', 'Заявка оновлена');
+        return redirect()->route('client.orders.index')->with('success', 'Заявка оновлена');
     }
 
     /**
