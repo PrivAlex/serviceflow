@@ -10,7 +10,7 @@
                         <div class="bg-blue-50 p-4 rounded-lg">
                             <h3 class="font-semibold text-blue-700">Мої заявки</h3>
                             <p class="text-sm text-gray-600">Переглянути всі свої заявки</p>
-                            <a :href="route('client.orders.my')" class="text-blue-500 hover:underline text-sm">Перейти →</a>
+                            <a :href="route('client.orders.index')" class="text-blue-500 hover:underline text-sm">Перейти →</a>
                         </div>
                         <div class="bg-green-50 p-4 rounded-lg">
                             <h3 class="font-semibold text-green-700">Створити заявку</h3>

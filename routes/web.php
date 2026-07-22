@@ -38,7 +38,7 @@ Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->g
     Route::get('/dashboard', function () {
         return Inertia::render('Client/Dashboard');})->name('dashboard');
     // Заявки
-    Route::get('/orders/my', [OrderController::class, 'myOrders'])->name('orders.my');
+    Route::get('/orders', [OrderController::class, 'clientOrders'])->name('orders.index');
     Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');

@@ -30,10 +30,18 @@ class OrderController extends Controller
     /**
      * Мої заявки — тільки заявки поточного клієнта.
      */
-    public function myOrders()
+    public function clientOrders(Request $request)
     {
-        $orders = Order::where('client_id', auth()->id())->with('tags')->paginate(10);
-        return Inertia::render('Orders/MyOrders', ['orders' => $orders]);
+        $query = Order::where('client_id', auth()->id())->with('tags');
+
+        if ($request->status === 'completed') {
+            $query->whereIn('status', ['completed', 'cancelled']);
+        } else {
+            $query->whereNotIn('status', ['completed', 'cancelled']);
+        }
+
+        $orders = $query->paginate(10);
+        return Inertia::render('Client/Orders/Index', ['orders' => $orders, 'activeTab' => $request->status ?? 'active']);
     }
 
     /**
