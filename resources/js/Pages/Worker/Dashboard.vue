@@ -10,12 +10,12 @@
                         <div class="bg-green-50 p-4 rounded-lg">
                             <h3 class="font-semibold text-green-700">Доступні заявки</h3>
                             <p class="text-sm text-gray-600">Заявки, які можна взяти в роботу</p>
-                            <a :href="route('worker.orders.index')" class="text-green-500 hover:underline text-sm">Переглянути →</a>
+                            <a :href="route('orders.index')" class="text-green-500 hover:underline text-sm">Переглянути →</a>
                         </div>
                         <div class="bg-blue-50 p-4 rounded-lg">
                             <h3 class="font-semibold text-blue-700">Мої заявки</h3>
                             <p class="text-sm text-gray-600">Заявки, які ви взяли в роботу</p>
-                            <a href="#" class="text-blue-500 hover:underline text-sm">Переглянути →</a>
+                            <a :href="route('worker.orders.index')" class="text-blue-500 hover:underline text-sm">Переглянути →</a>
                         </div>
                     </div>
                 </div>

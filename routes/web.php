@@ -52,7 +52,9 @@ Route::middleware(['auth', 'role:worker'])->prefix('worker')->name('worker.')->g
     Route::get('/dashboard', function () {
         return Inertia::render('Worker/Dashboard');})->name('dashboard');
     // Заявки
-    Route::get('/orders', [OrderController::class, 'availableOrders'])->name('orders.index');
+    Route::get('/orders', [OrderController::class, 'myWorkerOrders'])->name('orders.index');
+    Route::put('/orders/{order}/take', [OrderController::class, 'takeOrder'])->name('orders.take');
+    Route::put('/orders/{order}/complete', [OrderController::class, 'complete'])->name('orders.complete');
 });
 
 // ========== АДМІН — ЗАГОТОВКА ==========

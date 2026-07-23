@@ -19,15 +19,6 @@ class OrderController extends Controller
     }
 
     /**
-     * Список заявок для виконавця — тільки доступні.
-     */
-    public function availableOrders()
-    {
-        $orders = Order::where('status', 'new')->whereNull('worker_id')->with('tags', 'client')->paginate(10);
-        return Inertia::render('Orders/Available', ['orders' => $orders]);
-    }
-
-    /**
      * Мої заявки — тільки заявки поточного клієнта.
      */
     public function clientOrders(Request $request)
@@ -43,6 +34,27 @@ class OrderController extends Controller
         $orders = $query->paginate(10);
         return Inertia::render('Client/Orders/Index', ['orders' => $orders, 'activeTab' => $request->status ?? 'active']);
     }
+
+    /**
+     * Мої заявки (для виконавця) — заявки, які взяв поточний воркер.
+     */
+    public function myWorkerOrders(Request $request)
+    {
+        $query = Order::where('worker_id', auth()->id())->with('tags', 'client');
+
+        if ($request->status === 'completed') {
+            $query->whereIn('status', ['completed', 'ready']);
+        } else {
+            $query->whereIn('status', ['in_progress', 'new']);
+        }
+
+        $orders = $query->paginate(10);
+        return Inertia::render('Worker/Orders/Index', [
+            'orders' => $orders,
+            'activeTab' => $request->status ?? 'active'
+        ]);
+    }
+
 
     /**
      * Всі заявки для адміна (повний список, без фільтрів).
@@ -164,8 +176,15 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        $this->authorize('delete', $order);
-        $order->delete();
-        return redirect()->route('client.orders.my')->with('success', 'Заявка видалена');
+        try {
+            $order->delete();
+
+            return redirect()->route('orders.index')
+                ->with('success', 'Заявку успішно видалено');
+        } catch (\Exception $e) {
+            return back()->withErrors([
+                'error' => 'Не вдалося видалити заявку: ' . $e->getMessage()
+            ]);
+        }
     }
 }
